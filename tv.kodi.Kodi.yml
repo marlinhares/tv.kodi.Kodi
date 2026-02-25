@@ -31,6 +31,8 @@ finish-args:
   - --system-talk-name=org.freedesktop.UDisks2
   - --system-talk-name=org.freedesktop.UPower
   - --talk-name=org.freedesktop.ScreenSaver
+  - --env=PATH=/app/jre/bin:/app/bin:/usr/bin
+  - --env=JAVA_HOME=/app/jre
 
 cleanup:
   - '*.a'
@@ -50,6 +52,10 @@ cleanup:
   - /share/man
   - /var
 modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk17/install.sh
   - name: dav1d
     buildsystem: meson
     config-opts:
@@ -825,6 +831,10 @@ modules:
       - -DFETCHCONTENT_SOURCE_DIR_GROOVY=/app/groovy
       - -DFETCHCONTENT_SOURCE_DIR_APACHE-COMMONS-LANG=/app/commons-lang3
       - -DFETCHCONTENT_SOURCE_DIR_APACHE-COMMONS-TEXT=/app/commons-text
+    build-options:
+      env:
+        PATH: /app/bin:/usr/bin:/usr/lib/sdk/openjdk17/bin
+        JAVA_HOME: /usr/lib/sdk/openjdk17/jvm/openjdk-17
     sources:
       - type: git
         url: https://github.com/xbmc/xbmc.git
